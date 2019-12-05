@@ -13,7 +13,7 @@
 #include <map>
 #include "common.h"
 
-NS_ILONG
+NS_ILONG_BEGIN
 
 class TaskQueue: public std::enable_shared_from_this<TaskQueue>{
 public:
@@ -42,6 +42,6 @@ private:
     std::condition_variable new_task_scheduled_;
 };
 
-END_NS
+NS_ILONG_END
 
 #endif //ASYNC_TASK_POOL_TEST_TASK_QUEUE_H

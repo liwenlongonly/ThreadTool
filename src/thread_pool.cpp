@@ -3,3 +3,7 @@
 //
 
 #include "thread_pool.h"
+
+NS_ILONG_BEGIN
+
+NS_ILONG_END

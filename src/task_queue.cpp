@@ -4,7 +4,7 @@
 
 #include "task_queue.h"
 
-NS_ILONG
+NS_ILONG_BEGIN
 
 TaskQueue::TaskQueue():started_{false}, closed_{false} {
 
@@ -82,4 +82,4 @@ std::chrono::system_clock::time_point TaskQueue::getFirstTime() {
     return task_queue_.empty() ? std::chrono::system_clock::now() : task_queue_.begin()->first;
 }
 
-END_NS
+NS_ILONG_END

@@ -12,7 +12,7 @@
 #include <memory>
 #include <string>
 
-NS_ILONG
+NS_ILONG_BEGIN
 
 constexpr static int kMaxBufferCount = 30;
 
@@ -35,6 +35,6 @@ private:
 };
 
 
-END_NS
+NS_ILONG_END
 
 #endif //THREAD_TOOL_TEST_MEMORY_POOL_H

@@ -4,7 +4,7 @@
 
 #include "memory_pool.h"
 
-NS_ILONG
+NS_ILONG_BEGIN
 
 template <class T>
 MemoryPool<T>::MemoryPool(int maxCount, const std::string &tag)
@@ -65,4 +65,4 @@ int MemoryPool<T>::GetUsedCount(){
     return usedCount;
 }
 
-END_NS
+NS_ILONG_END
