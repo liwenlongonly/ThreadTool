@@ -15,7 +15,7 @@ tag_{tag}{
 
 template <class T>
 MemoryPool<T>::~MemoryPool() {
-
+    ClearAllObjects();
 }
 
 template <class T>
