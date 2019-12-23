@@ -92,4 +92,11 @@ TEST_F(TaskQueueTest2, Test2){
     }
 }
 
+TEST_F(TaskQueueTest2, Test3){
+    LOGD("current thread is main thread %d", task_queue_->isCurrent());
+    task_queue_->task([]{
+        LOGD("current thread is task_queue_ %d", task_queue_->isCurrent());
+    });
+}
+
 #endif //THREAD_TOOL_TEST_TASK_QUEUE_TEST_H

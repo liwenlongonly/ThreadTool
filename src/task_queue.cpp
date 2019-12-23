@@ -78,6 +78,16 @@ void TaskQueue::stop() {
     }
 }
 
+bool TaskQueue::isCurrent() {
+    if(thread_){
+        std::thread::id current_thread_id = std::this_thread::get_id();
+        if(current_thread_id == thread_->get_id()){
+            return true;
+        }
+    }
+    return false;
+}
+
 std::chrono::system_clock::time_point TaskQueue::getFirstTime() {
     return task_queue_.empty() ? std::chrono::system_clock::now() : task_queue_.begin()->first;
 }

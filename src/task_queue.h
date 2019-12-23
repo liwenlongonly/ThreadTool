@@ -31,6 +31,8 @@ public:
 
     virtual int taskCount();
 
+    virtual bool isCurrent();
+
 private:
     std::chrono::system_clock::time_point getFirstTime();
 private:
