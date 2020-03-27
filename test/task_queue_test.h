@@ -99,4 +99,34 @@ TEST_F(TaskQueueTest2, Test3){
     });
 }
 
+TEST_F(TaskQueueTest2, Test4){
+    std::unique_ptr<ilong::TaskQueue> task_queue(new ilong::TaskQueue());
+    task_queue->start();
+    for (int i = 0; i < 10; ++i) {
+        LOGD("start1 index: %d", i);
+        task_queue->task([i](){
+           LOGD("end2 index: %d", i);
+        }, 200);
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    }
+    task_queue->stop();
+    task_queue->start();
+    for (int i = 0; i < 10; ++i) {
+        LOGD("start2 index: %d", i);
+        task_queue->task([i](){
+           LOGD("end2 index: %d", i);
+        }, 200);
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    }
+    task_queue->stop();
+}
+
+TEST_F(TaskQueueTest2, Test5){
+    std::unique_ptr<ilong::TaskQueue> task_queue(new ilong::TaskQueue("test5"));
+    task_queue->start();
+    task_queue->start();
+    task_queue->stop();
+    task_queue->stop();
+}
+
 #endif //THREAD_TOOL_TEST_TASK_QUEUE_TEST_H
