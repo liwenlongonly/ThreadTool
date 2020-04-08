@@ -4,7 +4,12 @@
 
 #include "task_queue1.h"
 
-TaskQueue1::TaskQueue()1: started_{false}, closed_{false}  {
+NS_ILONG_BEGIN
+
+TaskQueue1::TaskQueue1(const std::string &tag):
+started_{false},
+closed_{false},
+tag_{tag}{
     tasks_.clear();
 }
 
@@ -17,7 +22,7 @@ void TaskQueue1::start() {
         return;
     }
     closed_.store(false);
-    ELOG_INFO("TaskQueue::start().");
+    LOGD("TaskQueue::start().");
     auto promise = std::make_shared<std::promise<void>>();
     thread_ = std::unique_ptr<std::thread>(new std::thread([this, &promise] {
         promise->set_value();
@@ -28,7 +33,7 @@ void TaskQueue1::start() {
                 std::unique_lock<std::mutex> lock(task_mutex_);
                 this->condition_.wait(lock, [this]{ return this->closed_ || !this->tasks_.empty(); });
                 task = std::move(this->tasks_.front());
-                this->tasks_.pop();
+                this->tasks_.pop_front();
             }
             task();
         }
@@ -57,7 +62,7 @@ void TaskQueue1::close() {
         }
         started_.store(false);
         tasks_.clear();
-        ELOG_INFO("TaskQueue::close().");
+        LOGD("TaskQueue::close().");
     }
 }
 
@@ -70,3 +75,5 @@ bool TaskQueue1::isCurrent() const{
     }
     return false;
 }
+
+NS_ILONG_END

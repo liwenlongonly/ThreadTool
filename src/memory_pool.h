@@ -32,7 +32,6 @@ private:
     std::string tag_;
 };
 
-
 NS_ILONG_END
 
 #endif //THREAD_TOOL_TEST_MEMORY_POOL_H
