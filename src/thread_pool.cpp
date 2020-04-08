@@ -42,7 +42,7 @@ void ThreadPool::start() {
             task();
         }
     };
-    for (auto promise:promises) {
+    for (auto &promise:promises) {
         promise = std::make_shared<std::promise<void>>();
         auto thread = std::unique_ptr<std::thread>(new std::thread(worker, std::ref(promise)));
         threads_.push_back(std::move(thread));
