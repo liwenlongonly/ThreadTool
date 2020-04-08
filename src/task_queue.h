@@ -7,6 +7,7 @@
 
 #include <atomic>
 #include <memory>
+#include <string>
 #include <mutex>  // NOLINT
 #include <future>  // NOLINT
 #include <thread>  // NOLINT
@@ -17,8 +18,8 @@ NS_ILONG_BEGIN
 
 class TaskQueue: public std::enable_shared_from_this<TaskQueue>{
 public:
-    typedef std::function<void > Task;
-    TaskQueue();
+    using Task = std::function<void()>;
+    TaskQueue(const std::string &tag = "");
     virtual ~TaskQueue();
 
     virtual void start();
@@ -45,6 +46,8 @@ private:
     std::unique_ptr<std::thread> thread_;
     mutable std::mutex task_mutex_;
     std::condition_variable new_task_scheduled_;
+
+    std::string tag_;
 };
 
 NS_ILONG_END

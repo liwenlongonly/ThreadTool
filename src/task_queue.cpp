@@ -6,7 +6,10 @@
 
 NS_ILONG_BEGIN
 
-TaskQueue::TaskQueue():started_{false}, closed_{false} {
+TaskQueue::TaskQueue(const std::string & tag):
+started_{false},
+closed_{false},
+tag_{tag}{
 
 }
 
@@ -18,6 +21,7 @@ void TaskQueue::start() {
     if (started_.exchange(true)) {
         return;
     }
+    LOGD("%s TaskQueue::start()", tag_.c_str());
     closed_.store(false);
     auto promise = std::make_shared<std::promise<void>>();
     auto work = [this, &promise](){
@@ -77,6 +81,8 @@ void TaskQueue::stop() {
         }
         started_.store(false);
         task_queue_.clear();
+        started_.store(false);
+        LOGD("%s TaskQueue::stop()", tag_.c_str());
     }
 }
 
