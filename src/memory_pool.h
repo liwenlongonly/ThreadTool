@@ -20,10 +20,10 @@ public:
     constexpr static int kMaxBufferCount = 30;
     MemoryPool(int maxCount = kMaxBufferCount, const std::string &tag = "");
     virtual ~MemoryPool();
-    std::shared_ptr<T> GetObject();
-    void ClearAllObjects();
-    int GetFreeCount();
-    int GetUsedCount();
+    std::shared_ptr<T> getObject();
+    void clearAllObjects();
+    int getFreeCount();
+    int getUsedCount();
 private:
     std::list<std::shared_ptr<T>> buffers_;
     std::mutex mutex_;

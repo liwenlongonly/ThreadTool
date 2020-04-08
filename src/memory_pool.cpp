@@ -15,11 +15,11 @@ tag_{tag}{
 
 template <class T>
 MemoryPool<T>::~MemoryPool() {
-    ClearAllObjects();
+    clearAllObjects();
 }
 
 template <class T>
-std::shared_ptr<T> MemoryPool<T>::GetObject(){
+std::shared_ptr<T> MemoryPool<T>::getObject(){
     std::lock_guard<std::mutex> guard(mutex_);
     int used_count = buffers_.size();
     if(used_count > max_buffer_count_){
@@ -37,13 +37,13 @@ std::shared_ptr<T> MemoryPool<T>::GetObject(){
 }
 
 template <class T>
-void MemoryPool<T>::ClearAllObjects(){
+void MemoryPool<T>::clearAllObjects(){
     std::lock_guard<std::mutex> guard(mutex_);
     buffers_.clear();
 }
 
 template <class T>
-int MemoryPool<T>::GetFreeCount(){
+int MemoryPool<T>::getFreeCount(){
     std::lock_guard<std::mutex> guard(mutex_);
     int freeCount = 0;
     for (const std::shared_ptr<T> &buffer : buffers_) {
@@ -55,7 +55,7 @@ int MemoryPool<T>::GetFreeCount(){
 }
 
 template <class T>
-int MemoryPool<T>::GetUsedCount(){
+int MemoryPool<T>::getUsedCount(){
     std::lock_guard<std::mutex> guard(mutex_);
     int usedCount = 0;
     for (const std::shared_ptr<T> &buffer : buffers_) {

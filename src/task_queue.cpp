@@ -33,7 +33,7 @@ void TaskQueue::start() {
             }
             std::chrono::system_clock::time_point time = getFirstTime();
             while (!closed_ && !task_queue_.empty()
-                 && new_task_scheduled_.wait_until(lock, time) != std::cv_status::timeout) {
+                && new_task_scheduled_.wait_until(lock, time) != std::cv_status::timeout) {
                 time = getFirstTime();
             }
             if(closed_){

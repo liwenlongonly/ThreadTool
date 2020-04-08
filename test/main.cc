@@ -7,6 +7,8 @@
 //
 
 #include "task_queue_test.h"
+#include "mempory_pool_test.h"
+#include "thread_pool_test.h"
 
 int main(int argc, const char * argv[]) {
     testing::InitGoogleTest();

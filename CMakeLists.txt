@@ -30,7 +30,7 @@ file(GLOB native_srcs "src/*.h" "src/*.cpp" )
 message(STATUS "native_srcs: ${native_srcs}")
 
 #config source group
-source_group(threadTool FILES ${native_srcs} )
+source_group(threadTool FILES ${native_srcs})
 
 add_library( # Sets the name of the library.
              thread_tool

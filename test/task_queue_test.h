@@ -29,6 +29,7 @@ protected:
         task_queue_->stop();
         task_queue_.reset();
     }
+
     std::shared_ptr<ilong::TaskQueue> task_queue_;
 };
 
@@ -38,7 +39,7 @@ TEST_F(TaskQueueTest1, Test1){
         task_queue_->task([i](){
             LOGD("end index: %d", i);
         });
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
@@ -47,8 +48,8 @@ TEST_F(TaskQueueTest1, Test2){
         LOGD("start index: %d", i);
         task_queue_->task([i](){
             LOGD("end index: %d", i);
-        }, 200);
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        }, 10);
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
@@ -78,7 +79,7 @@ TEST_F(TaskQueueTest2, Test1){
         task_queue_->task([i](){
             LOGD("end index: %d", i);
         });
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
@@ -87,8 +88,8 @@ TEST_F(TaskQueueTest2, Test2){
         LOGD("start index: %d", i);
         task_queue_->task([i](){
             LOGD("end index: %d", i);
-        }, 200);
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        }, 10);
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
@@ -105,9 +106,9 @@ TEST_F(TaskQueueTest2, Test4){
     for (int i = 0; i < 10; ++i) {
         LOGD("start1 index: %d", i);
         task_queue->task([i](){
-           LOGD("end2 index: %d", i);
-        }, 200);
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+           LOGD("end1 index: %d", i);
+        }, 10);
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     task_queue->stop();
     task_queue->start();
@@ -115,8 +116,8 @@ TEST_F(TaskQueueTest2, Test4){
         LOGD("start2 index: %d", i);
         task_queue->task([i](){
            LOGD("end2 index: %d", i);
-        }, 200);
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        }, 10);
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     task_queue->stop();
 }

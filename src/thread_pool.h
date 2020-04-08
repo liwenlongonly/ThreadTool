@@ -5,25 +5,41 @@
 #ifndef ASYNC_TASK_POOL_TEST_THREAD_POOL_H
 #define ASYNC_TASK_POOL_TEST_THREAD_POOL_H
 
-#include "common.h"
-#include "task_queue1.h"
+#include <atomic>
+#include <memory>
+#include <string>
+#include <mutex>   // NOLINT
+#include <future>  // NOLINT
+#include <thread>  // NOLINT
+#include <list>
 #include <vector>
+#include "common.h"
 
 NS_ILONG_BEGIN
 
 class ThreadPool{
 public:
-    ThreadPool(size_t num);
+    using Task = std::function<void()>;
+
+    ThreadPool(const size_t num = 1);
     virtual ~ThreadPool();
 
     virtual void start();
 
-    virtual void task(TaskQueue1::Task f);
+    virtual void task(Task f);
 
     virtual void close();
 
+    ThreadPool(const ThreadPool&) = delete;
+    const ThreadPool& operator=(const ThreadPool&) = delete;
 private:
-    std::vector<std::shared_ptr<TaskQueue1>> works_;
+    std::atomic<bool> started_;
+    std::atomic<bool> closed_;
+    std::condition_variable condition_;
+    std::vector<std::unique_ptr<std::thread>> threads_;
+    std::list<Task> tasks_;
+    mutable std::mutex task_mutex_;
+    size_t thread_num_;
 };
 
 NS_ILONG_END
