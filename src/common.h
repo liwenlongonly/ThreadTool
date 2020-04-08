@@ -47,7 +47,7 @@ static std::string GetFormatDate(){
     struct timeval  tv;
     struct tm       *p;
     gettimeofday(&tv, NULL);
-    p = localtime(&tv.tv_sec);
+    p = localtime(reinterpret_cast<const time_t *>(&tv.tv_sec));
     snprintf(tmpBuf, buff_len, "%d-%02d-%02d %02d:%02d:%02d.%03d",
              1900 + p->tm_year, 1 + p->tm_mon, p->tm_mday,
              p->tm_hour, p->tm_min, p->tm_sec, (int)(tv.tv_usec/1000));

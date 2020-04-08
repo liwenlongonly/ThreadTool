@@ -14,12 +14,10 @@
 
 NS_ILONG_BEGIN
 
-constexpr static int kMaxBufferCount = 30;
-
 template <class T>
 class MemoryPool{
-
 public:
+    constexpr static int kMaxBufferCount = 30;
     MemoryPool(int maxCount = kMaxBufferCount, const std::string &tag = "");
     virtual ~MemoryPool();
     std::shared_ptr<T> GetObject();

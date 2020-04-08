@@ -9,7 +9,7 @@
 #include <memory_pool.h>
 #include <common.h>
 
-class MemporyTest1:public testing:Test{
+class MemporyTest1: public testing::Test{
 
 };
 

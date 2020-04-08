@@ -17,7 +17,7 @@ NS_ILONG_BEGIN
 
 class TaskQueue: public std::enable_shared_from_this<TaskQueue>{
 public:
-    typedef std::function<void()> Task;
+    typedef std::function<void > Task;
     TaskQueue();
     virtual ~TaskQueue();
 
@@ -29,9 +29,12 @@ public:
 
     virtual void stop();
 
-    virtual int taskCount();
+    virtual int taskCount() const ;
 
-    virtual bool isCurrent();
+    virtual bool isCurrent() const ;
+
+    TaskQueue(const TaskQueue &) = delete;
+    const TaskQueue& operator=(const TaskQueue&) = delete;
 
 private:
     std::chrono::system_clock::time_point getFirstTime();

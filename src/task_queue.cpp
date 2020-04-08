@@ -18,6 +18,7 @@ void TaskQueue::start() {
     if (started_.exchange(true)) {
         return;
     }
+    closed_.store(false);
     auto promise = std::make_shared<std::promise<void>>();
     auto work = [this, &promise](){
         promise->set_value();
@@ -63,7 +64,7 @@ void TaskQueue::task(TaskQueue::Task f, int delay_ms) {
     new_task_scheduled_.notify_one();
 }
 
-int TaskQueue::taskCount() {
+int TaskQueue::taskCount() const {
     std::lock_guard<std::mutex> lock(task_mutex_);
     return task_queue_.size();
 }
@@ -74,11 +75,12 @@ void TaskQueue::stop() {
         if (thread_ != nullptr) {
             thread_->join();
         }
+        started_.store(false);
         task_queue_.clear();
     }
 }
 
-bool TaskQueue::isCurrent() {
+bool TaskQueue::isCurrent() const {
     if(thread_){
         std::thread::id current_thread_id = std::this_thread::get_id();
         if(current_thread_id == thread_->get_id()){

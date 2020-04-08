@@ -33,6 +33,7 @@ std::shared_ptr<T> MemoryPool<T>::GetObject(){
     }
     std::shared_ptr<T> data = std::make_shared<T>();
     buffers_.push_back(data);
+    return data;
 }
 
 template <class T>
