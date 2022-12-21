@@ -31,9 +31,9 @@ public:
 
     virtual void stop();
 
-    virtual int taskCount() const ;
+    virtual int taskCount() const;
 
-    virtual bool isCurrent() const ;
+    virtual bool isCurrent() const;
 
     TaskQueue(const TaskQueue &) = delete;
     const TaskQueue& operator=(const TaskQueue&) = delete;

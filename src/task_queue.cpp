@@ -76,12 +76,11 @@ int TaskQueue::taskCount() const {
 void TaskQueue::stop() {
     if (!closed_.exchange(true)) {
         new_task_scheduled_.notify_all();
-        if (thread_ != nullptr) {
+        if (thread_) {
             thread_->join();
         }
         started_.store(false);
         task_queue_.clear();
-        started_.store(false);
         LOGD("%s TaskQueue::stop()", tag_.c_str());
     }
 }

@@ -20,6 +20,10 @@
 #define NS_ILONG
 #endif
 
+#ifdef __WIN32
+#include <windows.h>
+#endif
+
 static std::string GetFormatDate();
 
 #define LOGTAG   "ILONG_LOG"
@@ -35,12 +39,12 @@ static std::string GetFormatDate();
 #define CC_CALLBACK_3(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, ##__VA_ARGS__)
 
 static std::string GetFormatDate(){
-    const int buff_len = 255;
-    char tmpBuf[buff_len];
-#ifdef WIN32
+    const int buff_len = 516;
+    char tmpBuf[buff_len] = {0};
+#ifdef __WIN32
     SYSTEMTIME sys;
-   GetLocalTime(&sys);
-   snprintf(tmpBuf, buff_len, "%d-%02d-%02d %02d:%02d:%02d.%03d",
+    GetLocalTime(&sys);
+    snprintf(tmpBuf, buff_len, "%d-%02d-%02d %02d:%02d:%02d.%03d",
             sys.wYear, sys.wMonth, sys.wDay,
             sys.wHour, sys.wMinute, sys.wSecond, sys.wMilliseconds);
 #else

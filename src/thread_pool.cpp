@@ -26,6 +26,7 @@ void ThreadPool::start() {
     closed_.store(false);
     std::vector<std::shared_ptr<std::promise<void>>> promises(thread_num_);
     auto worker = [this](std::shared_ptr<std::promise<void>> &promise){
+
         promise->set_value();
         while (!closed_) {
             //TODO
